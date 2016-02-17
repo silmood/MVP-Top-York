@@ -1,0 +1,78 @@
+ext {
+    //Version
+    supportVersion = '23.1.1'
+    retrofitVersion = '2.0.0-beta2'
+    rxJavaVersion = '1.0.16'
+    rxAndroidVersion = '1.0.1'
+    okhttpVersion = '2.7.0'
+    circleImageVersion = '1.3.0'
+    butterknifeVersion = '7.0.0'
+    glideVersion = '3.6.1'
+    slidingVersion = '3.2.0'
+    eventBusVersion = '2.4.0'
+
+    junitVersion = '4.12'
+    mockitoVersion = '1.10.19'
+    robolectricVersion = '3.0'
+    hamcrestVersion = '1.1'
+
+    //Packages
+    supportPackage = 'com.android.support'
+    retrofitPackage = 'com.squareup.retrofit'
+    okHttpPackage = 'com.squareup.okhttp'
+    reactivePackage = 'io.reactivex'
+    hdodenhofPackage = 'de.hdodenhof'
+    jakeWhartonPackage = 'com.jakewharton'
+    glidePackage = 'com.github.bumptech.glide'
+    slidingUpPanelPackage = 'com.sothree.slidinguppanel'
+    eventBusPackage = 'de.greenrobot'
+
+    junitPackage = 'junit'
+    mockitoPackage = 'org.mockito'
+    robolectricPackage = 'org.robolectric'
+    hamcrestPackage = 'org.hamcrest'
+
+    //Support Libraries dependencies
+    supportDependencies = [
+            design           : buildDependency(supportPackage, 'design', supportVersion),
+            recyclerView     : buildDependency(supportPackage, 'recyclerview-v7', supportVersion),
+            cardView         : buildDependency(supportPackage, 'cardview-v7', supportVersion),
+            appCompat        : buildDependency(supportPackage, 'appcompat-v7', supportVersion),
+            supportAnnotation: buildDependency(supportPackage, 'support-annotations', supportVersion),
+            palette          : buildDependency(supportPackage, 'palette-v7', supportVersion),
+            percent          : buildDependency(supportPackage, 'percent', supportVersion)
+    ]
+
+    retrofitDependencies = [
+            retrofit: buildDependency(retrofitPackage, 'retrofit', retrofitVersion),
+            gson    : buildDependency(retrofitPackage, 'converter-gson', retrofitVersion),
+            rxJava  : buildDependency(retrofitPackage, 'adapter-rxjava', retrofitVersion),
+            loggingInterceptor : buildDependency(okHttpPackage, 'logging-interceptor', okhttpVersion )
+    ]
+
+    rxDependencies = [
+            rxJava   : buildDependency(reactivePackage, 'rxjava', rxJavaVersion),
+            rxAndroid: buildDependency(reactivePackage, 'rxandroid', rxAndroidVersion)
+    ]
+
+    circleImageView = buildDependency(hdodenhofPackage, 'circleimageview', circleImageVersion)
+    butterknife = buildDependency(jakeWhartonPackage, 'butterknife', butterknifeVersion)
+    glide = buildDependency(glidePackage, 'glide', glideVersion)
+    slidingUpPanel = buildDependency(slidingUpPanelPackage, 'library', slidingVersion)
+    eventBus = buildDependency(eventBusPackage, 'eventbus', eventBusVersion )
+
+    //Testing
+
+    testingDependencies = [
+            junit       : buildDependency(junitPackage, 'junit', junitVersion),
+            mockito     : buildDependency(mockitoPackage, 'mockito-core', mockitoVersion),
+            robolectric : buildDependency(robolectricPackage, 'robolectric',   robolectricVersion),
+            hamcrest    : buildDependency(hamcrestPackage, 'hamcrest-library',   hamcrestVersion)
+    ]
+
+}
+
+String buildDependency(String pack, String dependency, String version) {
+    return "${pack}:${dependency}:${version}"
+}
+
