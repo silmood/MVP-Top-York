@@ -1,5 +1,10 @@
 package com.silmood.topyork;
 
+import retrofit.Call;
+import retrofit.http.GET;
+import retrofit.http.Path;
+import retrofit.http.Query;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -20,23 +25,9 @@ package com.silmood.topyork;
  * <p>
  * Created by Pedro Hernández on 02/2016.
  */
-public class Constants {
-    public static final String TITLE = "title";
-    public static final String ABSTRACT = "abstract";
-    public static final String URL = "url";
-    public static final String MULTIMEDIA = "multimedia";
-    public static final String FORMAT = "format";
-    public static final String HEIGHT = "height";
-    public static final String WIDTH = "width";
-    public static final String STATUS = "status";
-    public static final String RESULTS = "results";
+public interface TopStoriesApiService {
 
-    public class Api {
-        public static final String BASE_URL = "http://api.nytimes.com/svc/";
-        public static final String VERSION = "/v1";
-        public static final String FORMAT = "json";
-        public static final String SECTION = "home";
-        public static final String FETCH_TOP_STORIES = "topstories" +
-                VERSION + "/" + SECTION + "." + FORMAT;
-    }
+    @GET(Constants.Api.FETCH_TOP_STORIES)
+    Call<TopStoriesResponse> fetchTopStories();
+
 }

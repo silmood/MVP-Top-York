@@ -29,6 +29,7 @@ dependencies {
 
     compile retrofitDependencies.retrofit
     compile retrofitDependencies.gson
+    compile retrofitDependencies.loggingInterceptor
 
     compile butterknife
     compile glide

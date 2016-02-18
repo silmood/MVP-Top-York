@@ -1,5 +1,12 @@
 package com.silmood.topyork;
 
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -20,23 +27,22 @@ package com.silmood.topyork;
  * <p>
  * Created by Pedro Hernández on 02/2016.
  */
-public class Constants {
-    public static final String TITLE = "title";
-    public static final String ABSTRACT = "abstract";
-    public static final String URL = "url";
-    public static final String MULTIMEDIA = "multimedia";
-    public static final String FORMAT = "format";
-    public static final String HEIGHT = "height";
-    public static final String WIDTH = "width";
-    public static final String STATUS = "status";
-    public static final String RESULTS = "results";
+public class ApiInterceptor implements Interceptor{
 
-    public class Api {
-        public static final String BASE_URL = "http://api.nytimes.com/svc/";
-        public static final String VERSION = "/v1";
-        public static final String FORMAT = "json";
-        public static final String SECTION = "home";
-        public static final String FETCH_TOP_STORIES = "topstories" +
-                VERSION + "/" + SECTION + "." + FORMAT;
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        String API_VALUE_TOKEN = "9a0a5f5c65703adf67e0537a494d2b14:15:74435779";
+        String API_KEY = "api-key";
+
+        Request original = chain.request();
+        HttpUrl newUrl = original.httpUrl().newBuilder()
+                .addQueryParameter(API_KEY, API_VALUE_TOKEN).build();
+
+        Request request = original.newBuilder()
+                .method(original.method(), original.body())
+                .url(newUrl)
+                .build();
+
+        return chain.proceed(request);
     }
 }

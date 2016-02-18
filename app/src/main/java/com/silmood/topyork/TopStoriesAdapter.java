@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -57,16 +59,27 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
         return mTopStories.size();
     }
 
+    public void setItems(List<TopStory> items) {
+        mTopStories = items;
+        notifyDataSetChanged();
+    }
+
     public class TopStoryHolder extends RecyclerView.ViewHolder{
+
+        @Bind(R.id.label_title)
+        TextView mTitleLabel;
 
         TopStory mTopStory;
 
         public TopStoryHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bindStory(TopStory topStory) {
             mTopStory = topStory;
+
+            mTitleLabel.setText(topStory.getTitle());
         }
     }
 }

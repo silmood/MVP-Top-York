@@ -2,10 +2,12 @@ package com.silmood.topyork;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -37,8 +39,8 @@ public class TopStory {
     @SerializedName(Constants.URL)
     String mUrl;
 
-    @SerializedName(Constants.MULTIMEDIA)
-    ArrayList<Multimedia> mMultimedias;
+    @Expose
+    List<Multimedia> mMultimedias;
 
     public String getTitle() {
         return mTitle;
@@ -64,12 +66,12 @@ public class TopStory {
         mUrl = url;
     }
 
-    public ArrayList<Multimedia> getMultimedias() {
+    public List<Multimedia> getMultimedias() {
         return mMultimedias;
     }
 
 
-    public void setMultimedias(ArrayList<Multimedia> multimedias) {
+    public void setMultimedias(List<Multimedia> multimedias) {
         mMultimedias = multimedias;
     }
 

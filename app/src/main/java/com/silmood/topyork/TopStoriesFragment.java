@@ -5,7 +5,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.List;
+
 import butterknife.Bind;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -52,6 +57,28 @@ public class TopStoriesFragment extends BaseFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        TopStoriesApiClient.getInstance()
+                .fetchTopStories().enqueue(new Callback<TopStoriesResponse>() {
+            @Override
+            public void onResponse(Response<TopStoriesResponse> response, Retrofit retrofit) {
+                updateList(response.body().getStories());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void updateList(List<TopStory> stories) {
+        if (mStoriesAdapter == null)
+            mStoriesAdapter = new TopStoriesAdapter(stories);
+        else
+            mStoriesAdapter.setItems(stories);
+
+        mTopStoriesList.setAdapter(mStoriesAdapter);
     }
 
     private void initializeList(RecyclerView list) {
