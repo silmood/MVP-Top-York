@@ -1,6 +1,9 @@
 package com.silmood.topyork;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +39,7 @@ import retrofit.Retrofit;
  * <p/>
  * Created by Pedro Hernández on 02/2016.
  */
-public class TopStoriesFragment extends BaseFragment {
+public class TopStoriesFragment extends BaseFragment implements OnItemClickListener<TopStory> {
 
     @Bind(R.id.list_top_stories)
     RecyclerView mTopStoriesList;
@@ -64,16 +67,21 @@ public class TopStoriesFragment extends BaseFragment {
     @Override
     public void initView(View view, Bundle savedInstanceState) {
         super.initView(view, savedInstanceState);
-        initializeList(mTopStoriesList);
+        mStoriesAdapter = createStoriesAdapter(this);
+        initializeList(mTopStoriesList, mStoriesAdapter);
         initializeRetryButton(mRetryButton);
-        mStoriesAdapter = createStoriesAdapter();
-        mTopStoriesList.setAdapter(mStoriesAdapter);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         fetchStories();
+    }
+
+    @Override
+    public void onItemClicked(int position, TopStory item) {
+        Intent webIntent = createWebIntent(item.getUrl());
+        startActivity(webIntent);
     }
 
     private void fetchStories() {
@@ -106,9 +114,10 @@ public class TopStoriesFragment extends BaseFragment {
         mStoriesAdapter.setItems(stories);
     }
 
-    private void initializeList(RecyclerView list) {
+    private void initializeList(RecyclerView list, RecyclerView.Adapter adapter) {
         list.setLayoutManager(new LinearLayoutManager(getContext()));
         list.addItemDecoration(new SimpleSpaceDecorator(getContext(), R.dimen.spacing_medium));
+        list.setAdapter(adapter);
     }
 
     private void initializeRetryButton(ImageButton retryButton) {
@@ -121,7 +130,20 @@ public class TopStoriesFragment extends BaseFragment {
         });
     }
 
-    private TopStoriesAdapter createStoriesAdapter() {
-        return new TopStoriesAdapter();
+    private TopStoriesAdapter createStoriesAdapter(@Nullable OnItemClickListener<TopStory> listener) {
+        TopStoriesAdapter adapter = new TopStoriesAdapter();
+
+        if(listener != null)
+            adapter.setItemClickListener(listener);
+
+        return adapter;
+    }
+
+    private Intent createWebIntent(String url) {
+        Intent webIntent = new Intent();
+        webIntent.setAction(Intent.ACTION_VIEW);
+        webIntent.setData(Uri.parse(url));
+
+        return webIntent;
     }
 }

@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.TopStoryHolder> {
 
     private List<TopStory> mTopStories;
+    private OnItemClickListener<TopStory> mItemClickListener;
     private Context mContext;
 
     public TopStoriesAdapter() {
@@ -76,12 +77,16 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
         notifyDataSetChanged();
     }
 
+    public void setItemClickListener(OnItemClickListener<TopStory> itemClickListener) {
+        mItemClickListener = itemClickListener;
+    }
+
     public void clear() {
         mTopStories.clear();
         notifyDataSetChanged();
     }
 
-    public class TopStoryHolder extends RecyclerView.ViewHolder {
+    public class TopStoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Bind(R.id.image_story)
         ImageView mStoryImage;
@@ -103,6 +108,7 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
         public TopStoryHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         public void bindStory(TopStory topStory) {
@@ -120,14 +126,18 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
                         .load(multimedia.getUrl())
                         .centerCrop()
                         .into(mStoryImage);
-            }
-
-            else {
+            } else {
                 Glide.with(mContext)
                         .load(R.drawable.ic_placeholder)
                         .fitCenter()
                         .into(mStoryImage);
             }
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mItemClickListener != null)
+                mItemClickListener.onItemClicked(getAdapterPosition(), mTopStory);
         }
     }
 }
