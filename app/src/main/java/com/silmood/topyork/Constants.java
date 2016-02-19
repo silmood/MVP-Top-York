@@ -30,6 +30,9 @@ public class Constants {
     public static final String WIDTH = "width";
     public static final String STATUS = "status";
     public static final String RESULTS = "results";
+    public static final String SECTION = "section";
+    public static final String SUBSECTION = "subsection";
+    public static final String BY = "byline";
 
     public class Api {
         public static final String BASE_URL = "http://api.nytimes.com/svc/";

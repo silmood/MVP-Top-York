@@ -83,6 +83,6 @@ public class TopStoriesFragment extends BaseFragment{
 
     private void initializeList(RecyclerView list) {
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        list.addItemDecoration(new SimpleSpaceDecorator(getContext(), R.dimen.list_margin));
+        list.addItemDecoration(new SimpleSpaceDecorator(getContext(), R.dimen.spacing_medium));
     }
 }

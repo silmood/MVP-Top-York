@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 /**
  *  Licensed to the Apache Software Foundation (ASF) under one
@@ -34,6 +35,8 @@ public abstract class FragmentContainerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
 
+        setupToolbar();
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
@@ -44,4 +47,16 @@ public abstract class FragmentContainerActivity extends AppCompatActivity{
                     .commit();
         }
     }
+
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null){
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.drawable.ic_t_logo);
+        }
+
+    }
+
+
 }

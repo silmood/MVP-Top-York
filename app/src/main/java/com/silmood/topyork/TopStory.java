@@ -1,6 +1,7 @@
 package com.silmood.topyork;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -39,6 +40,15 @@ public class TopStory {
     @SerializedName(Constants.URL)
     String mUrl;
 
+    @SerializedName(Constants.SECTION)
+    String mSection;
+
+    @SerializedName(Constants.SUBSECTION)
+    String mSubSection;
+
+    @SerializedName(Constants.BY)
+    String mBy;
+
     @Expose
     List<Multimedia> mMultimedias;
 
@@ -66,18 +76,46 @@ public class TopStory {
         mUrl = url;
     }
 
+    public String getSection() {
+        return mSection;
+    }
+
+    public void setSection(String section) {
+        mSection = section;
+    }
+
+    public String getSubSection() {
+        return mSubSection;
+    }
+
+    public void setSubSection(String subSection) {
+        mSubSection = subSection;
+    }
+
+    public String getBy() {
+        return mBy;
+    }
+
+    public void setBy(String by) {
+        mBy = by;
+    }
+
     public List<Multimedia> getMultimedias() {
         return mMultimedias;
     }
-
 
     public void setMultimedias(List<Multimedia> multimedias) {
         mMultimedias = multimedias;
     }
 
-    public Multimedia getLargestImage(){
-        Collections.sort(mMultimedias);
-        return mMultimedias.get(0);
+    @Nullable
+    public Multimedia getBestImage(){
+        if (mMultimedias != null) {
+            Collections.sort(mMultimedias);
+            return mMultimedias.get(0);
+        }
+
+        return null;
     }
 
     public class Multimedia implements Comparable<Multimedia>{
@@ -129,7 +167,7 @@ public class TopStory {
         @Override
         public int compareTo(@NonNull Multimedia multimedia) {
             int compareWidth = multimedia.getWidth();
-            return getWidth() - compareWidth;
+            return compareWidth - getWidth();
         }
     }
 }
