@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def NYT_API_KEY ='"' + NYTApiKey + '"' ?: '"Define LastFm Api key"';
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -15,6 +17,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            buildConfigField 'String', 'NYT_API_KEY', NYTApiKey
         }
     }
 }

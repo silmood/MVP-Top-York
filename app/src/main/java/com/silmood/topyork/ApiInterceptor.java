@@ -31,12 +31,9 @@ public class ApiInterceptor implements Interceptor{
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        String API_VALUE_TOKEN = "9a0a5f5c65703adf67e0537a494d2b14:15:74435779";
-        String API_KEY = "api-key";
-
         Request original = chain.request();
         HttpUrl newUrl = original.httpUrl().newBuilder()
-                .addQueryParameter(API_KEY, API_VALUE_TOKEN).build();
+                .addQueryParameter(Constants.Api.API_KEY, BuildConfig.NYT_API_KEY).build();
 
         Request request = original.newBuilder()
                 .method(original.method(), original.body())

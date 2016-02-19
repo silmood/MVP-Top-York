@@ -41,5 +41,6 @@ public class Constants {
         public static final String SECTION = "home";
         public static final String FETCH_TOP_STORIES = "topstories" +
                 VERSION + "/" + SECTION + "." + FORMAT;
+        public static final String API_KEY = "api-key";
     }
 }
