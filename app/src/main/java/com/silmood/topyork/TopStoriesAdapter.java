@@ -125,11 +125,12 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
                 Glide.with(mContext)
                         .load(multimedia.getUrl())
                         .centerCrop()
+                        .placeholder(R.drawable.ic_placeholder)
+                        .dontAnimate()
                         .into(mStoryImage);
             } else {
                 Glide.with(mContext)
                         .load(R.drawable.ic_placeholder)
-                        .fitCenter()
                         .into(mStoryImage);
             }
         }
