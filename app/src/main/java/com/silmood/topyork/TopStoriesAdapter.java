@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -40,6 +41,10 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
     private List<TopStory> mTopStories;
     private Context mContext;
 
+    public TopStoriesAdapter() {
+        mTopStories = new ArrayList<>();
+    }
+
     public TopStoriesAdapter(List<TopStory> topStories) {
         mTopStories = topStories;
     }
@@ -68,6 +73,11 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesAdapter.To
 
     public void setItems(List<TopStory> items) {
         mTopStories = items;
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mTopStories.clear();
         notifyDataSetChanged();
     }
 
