@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TopStoriesActivity">
+    tools:context=".topstories.TopStoriesActivity">
 
     <include
         layout="@layout/toolbar"/>

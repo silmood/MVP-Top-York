@@ -1,16 +1,25 @@
-package com.silmood.topyork;
+package com.silmood.topyork.topstories;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
+import com.silmood.topyork.BaseFragment;
+import com.silmood.topyork.BuildConfig;
+import com.silmood.topyork.Injection;
+import com.silmood.topyork.OnItemClickListener;
+import com.silmood.topyork.R;
+import com.silmood.topyork.SimpleSpaceDecorator;
+import com.silmood.topyork.TopStoriesApiClient;
+import com.silmood.topyork.model.TopStoriesResponse;
+import com.silmood.topyork.model.TopStory;
 
 import java.util.List;
 
@@ -39,7 +48,7 @@ import retrofit.Retrofit;
  * <p/>
  * Created by Pedro Hernández on 02/2016.
  */
-public class TopStoriesFragment extends BaseFragment implements OnItemClickListener<TopStory> {
+public class TopStoriesFragment extends BaseFragment implements TopStoriesContract.View{
 
     @Bind(R.id.list_top_stories)
     RecyclerView mTopStoriesList;
@@ -55,6 +64,8 @@ public class TopStoriesFragment extends BaseFragment implements OnItemClickListe
 
     TopStoriesAdapter mStoriesAdapter;
 
+    TopStoriesContract.UserActionListener mActionListener;
+
     public static TopStoriesFragment newInstance() {
         return new TopStoriesFragment();
     }
@@ -67,7 +78,12 @@ public class TopStoriesFragment extends BaseFragment implements OnItemClickListe
     @Override
     public void initView(View view, Bundle savedInstanceState) {
         super.initView(view, savedInstanceState);
-        mStoriesAdapter = createStoriesAdapter(this);
+        mStoriesAdapter = createStoriesAdapter(new OnItemClickListener<TopStory>() {
+            @Override
+            public void onItemClicked(int position, TopStory item) {
+                mActionListener.storyDetail(item);
+            }
+        });
         initializeList(mTopStoriesList, mStoriesAdapter);
         initializeRetryButton(mRetryButton);
     }
@@ -75,43 +91,30 @@ public class TopStoriesFragment extends BaseFragment implements OnItemClickListe
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        fetchStories();
+        if(mActionListener == null)
+            mActionListener = new TopStoriesPresenter(this, Injection.provideTopStoriesRepository());
+
+        mActionListener.requestTopStories();
     }
 
     @Override
-    public void onItemClicked(int position, TopStory item) {
-        Intent webIntent = createWebIntent(item.getUrl());
-        startActivity(webIntent);
+    public void setProgressVisible(boolean visible) {
+        mProgressBar.setVisibility(visible? View.VISIBLE : View.INVISIBLE);
     }
 
-    private void fetchStories() {
-        mStoriesAdapter.clear();
-        mProgressBar.setVisibility(View.VISIBLE);
-        TopStoriesApiClient.getInstance()
-                .fetchTopStories().enqueue(new Callback<TopStoriesResponse>() {
-            @Override
-            public void onResponse(Response<TopStoriesResponse> response, Retrofit retrofit) {
-                mProgressBar.setVisibility(View.INVISIBLE);
-                updateList(response.body().getStories());
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                if (BuildConfig.DEBUG)
-                    t.printStackTrace();
-
-                mProgressBar.setVisibility(View.INVISIBLE);
-                showRequestError();
-            }
-        });
+    @Override
+    public void launchActivity(Intent intent) {
+        startActivity(intent);
     }
 
-    private void showRequestError() {
-        mErrorLayout.setVisibility(View.VISIBLE);
-    }
-
-    private void updateList(List<TopStory> stories) {
+    @Override
+    public void showStories(List<TopStory> stories) {
         mStoriesAdapter.setItems(stories);
+    }
+
+    @Override
+    public void showRequestError() {
+        mErrorLayout.setVisibility(View.VISIBLE);
     }
 
     private void initializeList(RecyclerView list, RecyclerView.Adapter adapter) {
@@ -125,7 +128,7 @@ public class TopStoriesFragment extends BaseFragment implements OnItemClickListe
             @Override
             public void onClick(View view) {
                 mErrorLayout.setVisibility(View.INVISIBLE);
-                fetchStories();
+                mActionListener.requestTopStories();
             }
         });
     }
@@ -139,11 +142,5 @@ public class TopStoriesFragment extends BaseFragment implements OnItemClickListe
         return adapter;
     }
 
-    private Intent createWebIntent(String url) {
-        Intent webIntent = new Intent();
-        webIntent.setAction(Intent.ACTION_VIEW);
-        webIntent.setData(Uri.parse(url));
 
-        return webIntent;
-    }
 }

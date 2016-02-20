@@ -1,9 +1,9 @@
-package com.silmood.topyork;
+package com.silmood.topyork.model;
 
-import retrofit.Call;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import com.google.gson.annotations.SerializedName;
+import com.silmood.topyork.Constants;
+
+import java.util.List;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -25,9 +25,27 @@ import retrofit.http.Query;
  * <p>
  * Created by Pedro Hernández on 02/2016.
  */
-public interface TopStoriesApiService {
+public class TopStoriesResponse {
 
-    @GET(Constants.Api.FETCH_TOP_STORIES)
-    Call<TopStoriesResponse> fetchTopStories();
+    @SerializedName(Constants.STATUS)
+    String mStatus;
 
+    @SerializedName(Constants.RESULTS)
+    List<TopStory> mStories;
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
+
+    public List<TopStory> getStories() {
+        return mStories;
+    }
+
+    public void setStories(List<TopStory> stories) {
+        mStories = stories;
+    }
 }

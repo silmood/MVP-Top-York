@@ -1,4 +1,4 @@
-package com.silmood.topyork;
+package com.silmood.topyork.topstories;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.silmood.topyork.OnItemClickListener;
+import com.silmood.topyork.R;
+import com.silmood.topyork.model.TopStory;
 
 import java.util.ArrayList;
 import java.util.List;

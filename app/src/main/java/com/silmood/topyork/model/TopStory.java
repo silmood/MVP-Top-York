@@ -1,10 +1,11 @@
-package com.silmood.topyork;
+package com.silmood.topyork.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.silmood.topyork.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
