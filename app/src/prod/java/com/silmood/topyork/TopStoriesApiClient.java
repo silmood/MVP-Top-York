@@ -8,6 +8,7 @@ import com.silmood.topyork.model.TopStory;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -38,7 +39,7 @@ import retrofit.Retrofit;
 public class TopStoriesApiClient implements TopStoriesApiService{
 
     static TopStoriesApiClient mApiClient;
-    TopStoriesRetrofitApiService mApiService;
+    TopStoriesRetrofitApiService mRetrofitApiService;
 
     public static TopStoriesApiClient getInstance(){
         if (mApiClient == null) {
@@ -67,7 +68,7 @@ public class TopStoriesApiClient implements TopStoriesApiService{
                 .client(client)
                 .build();
 
-        mApiService = retrofit.create(TopStoriesRetrofitApiService.class);
+        mRetrofitApiService = retrofit.create(TopStoriesRetrofitApiService.class);
     }
 
     private static void addLoggingInterceptor(OkHttpClient client) {
@@ -79,7 +80,7 @@ public class TopStoriesApiClient implements TopStoriesApiService{
 
     @Override
     public void fetchTopStories(final TopStoriesApiCallback<List<TopStory>> callback) {
-        mApiService.fetchTopStories().enqueue(new Callback<TopStoriesResponse>() {
+        mRetrofitApiService.fetchTopStories().enqueue(new Callback<TopStoriesResponse>() {
             @Override
             public void onResponse(Response<TopStoriesResponse> response, Retrofit retrofit) {
                 callback.onLoaded(response.body().getStories());

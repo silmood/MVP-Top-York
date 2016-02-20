@@ -14,11 +14,11 @@ public class TopStoriesContract {
     public interface View{
         void setProgressVisible(boolean visible);
 
-        void launchActivity(Intent intent);
-
         void showStories(List<TopStory> stories);
 
         void showRequestError();
+
+        void launchActivity(Intent intent);
     }
 
     public interface UserActionListener{
