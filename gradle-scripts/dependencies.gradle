@@ -55,20 +55,18 @@ ext {
             rxAndroid: buildDependency(reactivePackage, 'rxandroid', rxAndroidVersion)
     ]
 
-    circleImageView = buildDependency(hdodenhofPackage, 'circleimageview', circleImageVersion)
-    butterknife = buildDependency(jakeWhartonPackage, 'butterknife', butterknifeVersion)
-    glide = buildDependency(glidePackage, 'glide', glideVersion)
-    slidingUpPanel = buildDependency(slidingUpPanelPackage, 'library', slidingVersion)
-    eventBus = buildDependency(eventBusPackage, 'eventbus', eventBusVersion )
-
-    //Testing
-
     testingDependencies = [
             junit       : buildDependency(junitPackage, 'junit', junitVersion),
             mockito     : buildDependency(mockitoPackage, 'mockito-core', mockitoVersion),
             robolectric : buildDependency(robolectricPackage, 'robolectric',   robolectricVersion),
             hamcrest    : buildDependency(hamcrestPackage, 'hamcrest-library',   hamcrestVersion)
     ]
+
+    circleImageView = buildDependency(hdodenhofPackage, 'circleimageview', circleImageVersion)
+    butterknife = buildDependency(jakeWhartonPackage, 'butterknife', butterknifeVersion)
+    glide = buildDependency(glidePackage, 'glide', glideVersion)
+    slidingUpPanel = buildDependency(slidingUpPanelPackage, 'library', slidingVersion)
+    eventBus = buildDependency(eventBusPackage, 'eventbus', eventBusVersion )
 
 }
 

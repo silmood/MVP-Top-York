@@ -55,8 +55,5 @@ public abstract class FragmentContainerActivity extends AppCompatActivity{
             setSupportActionBar(toolbar);
             toolbar.setNavigationIcon(R.drawable.ic_t_logo);
         }
-
     }
-
-
 }

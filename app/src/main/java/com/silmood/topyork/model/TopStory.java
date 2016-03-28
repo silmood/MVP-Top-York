@@ -7,7 +7,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.silmood.topyork.Constants;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
