@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def NYT_API_KEY ='"' + NYTApiKey + '"' ?: '"Define LastFm Api key"';
+def NYT_API_KEY ='"' + NYTApiKey + '"' ?: '"Define NYT Api Key https://developer.nytimes.com/signup"';
 
 android {
     compileSdkVersion 23
